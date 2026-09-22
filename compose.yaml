@@ -1,7 +1,13 @@
 services:
-  lma-dev:
-    build: .
-    image: lma-dev
+  lma-container:
+    platform: linux/amd64
+    build:
+      context: .
+      additional_contexts:
+        lma_index_source: ../lma-index
+      args:
+        LMA_INDEX_REVISION: ${LMA_INDEX_REVISION:-workspace}
+    image: lma-container:latest
     volumes:
       - lma_home:/home/lma
 

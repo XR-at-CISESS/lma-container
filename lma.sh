@@ -1,11 +1,13 @@
-#!/bin/bash
-# A script to assist in utilizing the LMA developer container.
+#!/usr/bin/env bash
+set -euo pipefail
 
-if [[ $# -eq 1 ]]
-then
-    DOCKER_MOUNT_PATH="$(realpath $1)"
+# Start an interactive LMA shell with a host directory mounted at /host.
+if [[ $# -eq 1 ]]; then
+    docker_mount_path="$(realpath "$1")"
 else
-    DOCKER_MOUNT_PATH="$(pwd)"
+    docker_mount_path="$(pwd)"
 fi
 
-docker compose run -v $DOCKER_MOUNT_PATH:/host --rm lma-dev
+docker compose run --build --rm \
+    --volume "${docker_mount_path}:/host" \
+    lma-container
