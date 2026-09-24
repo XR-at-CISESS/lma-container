@@ -7,9 +7,10 @@ from cartopy.io import shapereader
 
 
 RESOURCES = (
-    ("110m", "physical", "land"),
-    ("110m", "physical", "lakes"),
-    ("110m", "physical", "ocean"),
+    # LAND, LAKES and OCEAN automatically select a scale from the map extent.
+    *((scale, "physical", name)
+      for scale in ("110m", "50m", "10m")
+      for name in ("land", "lakes", "ocean")),
     ("10m", "physical", "coastline"),
     ("50m", "cultural", "admin_1_states_provinces_lines"),
 )

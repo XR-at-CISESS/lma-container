@@ -76,3 +76,12 @@ docker buildx build --load --platform linux/amd64 \
 The resolved Python VCS revisions and runtime versions are written to
 `/usr/share/lma-runtime/manifest.json`. Run `verify_lma_runtime` in the image to
 repeat the command and asset checks performed during the build.
+
+Cartopy's bundled data lives at `CARTOPY_DATA_DIR=/usr/share/cartopy`.
+Land, lakes, and ocean are preloaded at 110m, 50m, and 10m resolutions for
+automatic map scaling, alongside 10m coastlines and 50m state boundaries.
+Verification resolves and opens every required shapefile with downloads disabled.
+Additional resources may be downloaded to `$XDG_DATA_HOME/cartopy`, defaulting
+to `/tmp/lma-data/cartopy`. Keep `/tmp` writable when running with a read-only
+root filesystem, or set `XDG_DATA_HOME` to a writable persistent volume.
+Fetching additional resources requires network access.

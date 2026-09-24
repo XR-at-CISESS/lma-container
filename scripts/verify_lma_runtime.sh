@@ -16,9 +16,36 @@ test -f "${LMA_SHAPES_DIR:-/usr/share/lma_shapes}/countyl010g.shp"
 test -f "${LMA_GPS_DIR:-/usr/share/lma_gps}/dclma.gps"
 test -f "${LMA_GPS_DIR:-/usr/share/lma_gps}/wff.gps"
 test -d "${CARTOPY_DATA_DIR:-/usr/share/cartopy}"
-test -f "${CARTOPY_DATA_DIR:-/usr/share/cartopy}/shapefiles/natural_earth/physical/ne_110m_land.shp"
-test -f "${CARTOPY_DATA_DIR:-/usr/share/cartopy}/shapefiles/natural_earth/physical/ne_10m_coastline.shp"
-test -f "${CARTOPY_DATA_DIR:-/usr/share/cartopy}/shapefiles/natural_earth/cultural/ne_50m_admin_1_states_provinces_lines.shp"
+python3 - <<'PY'
+import os
+from pathlib import Path
+from unittest.mock import patch
+
+from cartopy.io import shapereader
+
+root = Path(os.environ["CARTOPY_DATA_DIR"]).resolve()
+resources = [
+    (scale, "physical", name)
+    for scale in ("110m", "50m", "10m")
+    for name in ("land", "lakes", "ocean")
+] + [
+    ("10m", "physical", "coastline"),
+    ("50m", "cultural", "admin_1_states_provinces_lines"),
+]
+# Verify actual runtime lookup, without allowing downloads to hide missing assets.
+with patch.object(shapereader.NEShpDownloader, "acquire_resource",
+                  side_effect=RuntimeError("Required Cartopy data was not bundled")):
+    for scale, category, name in resources:
+        path = Path(shapereader.natural_earth(scale, category, name)).resolve()
+        assert path.is_relative_to(root), f"Resource outside bundled directory: {path}"
+        for extension in (".shp", ".shx", ".dbf"):
+            assert path.with_suffix(extension).is_file(), path.with_suffix(extension)
+        reader = shapereader.Reader(path)
+        try:
+            assert len(reader) > 0, f"Empty shapefile: {path}"
+        finally:
+            reader.close()
+PY
 test -f "${LMA_RUNTIME_MANIFEST:-/usr/share/lma-runtime/manifest.json}"
 
 python3 -m json.tool \

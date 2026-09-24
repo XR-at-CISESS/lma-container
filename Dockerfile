@@ -68,7 +68,8 @@ COPY --from=lma_index_builder /out/lma-index /usr/local/bin/lma-index
 COPY ./shapes /usr/share/lma_shapes
 COPY ./lc/lma_gps /usr/share/lma_gps
 COPY ./scripts/preload_cartopy.py /tmp/preload_cartopy.py
-ENV CARTOPY_DATA_DIR=/usr/share/cartopy
+ENV CARTOPY_DATA_DIR=/usr/share/cartopy \
+    XDG_DATA_HOME=/tmp/lma-data
 RUN mkdir -p "${CARTOPY_DATA_DIR}" \
     && python3 /tmp/preload_cartopy.py \
     && rm /tmp/preload_cartopy.py \
