@@ -2,8 +2,10 @@
 
 This repository builds the shared LMA scientific runtime used for development,
 testing, and LMAO deployments. The image provides `lma_analysis`, `lma_flash`,
-`lma_plot`, `lma-index`, the Python `lma_data` package, county shapes, and the
-Cartopy resources required for offline plotting.
+`lma_plot`, `lma-index`, the Python `lma_data` package, county shapes, the
+`dclma.gps` and `wff.gps` survey files, and the Cartopy resources required for
+offline plotting. The survey files are available under `/usr/share/lma_gps`;
+`LMA_GPS_DIR` points to that directory.
 
 The distributed `lma_analysis` executable is x86-64, so the image targets
 `linux/amd64`. Docker Desktop can run it through platform emulation on Apple

@@ -66,12 +66,13 @@ RUN LMA_ANALYSIS_VERSION=${LMA_ANALYSIS_VERSION} \
 COPY --from=lma_index_builder /out/lma-index /usr/local/bin/lma-index
 
 COPY ./shapes /usr/share/lma_shapes
+COPY ./lc/lma_gps /usr/share/lma_gps
 COPY ./scripts/preload_cartopy.py /tmp/preload_cartopy.py
 ENV CARTOPY_DATA_DIR=/usr/share/cartopy
 RUN mkdir -p "${CARTOPY_DATA_DIR}" \
     && python3 /tmp/preload_cartopy.py \
     && rm /tmp/preload_cartopy.py \
-    && chmod -R a+rX /usr/share/lma_shapes "${CARTOPY_DATA_DIR}"
+    && chmod -R a+rX /usr/share/lma_shapes /usr/share/lma_gps "${CARTOPY_DATA_DIR}"
 
 COPY ./scripts/initialize_lma.sh /usr/local/bin/initialize_lma.sh
 COPY ./scripts/verify_lma_runtime.sh /usr/local/bin/verify_lma_runtime
@@ -89,6 +90,7 @@ RUN chmod 0555 \
 ENV LMA_DATA_DIR=/home/lma/lma_data \
     LMA_OUT_DIR=/home/lma/lma_out \
     LMA_SHAPES_DIR=/usr/share/lma_shapes \
+    LMA_GPS_DIR=/usr/share/lma_gps \
     MPLCONFIGDIR=/tmp/matplotlib
 
 RUN groupadd --gid 1001 lma \

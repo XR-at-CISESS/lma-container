@@ -13,6 +13,8 @@ lma_plot --help 2>&1 | grep -F "out_dir" >/dev/null
 lma-index --help 2>&1 | grep -F "usage: lma-index" >/dev/null
 
 test -f "${LMA_SHAPES_DIR:-/usr/share/lma_shapes}/countyl010g.shp"
+test -f "${LMA_GPS_DIR:-/usr/share/lma_gps}/dclma.gps"
+test -f "${LMA_GPS_DIR:-/usr/share/lma_gps}/wff.gps"
 test -d "${CARTOPY_DATA_DIR:-/usr/share/cartopy}"
 test -f "${CARTOPY_DATA_DIR:-/usr/share/cartopy}/shapefiles/natural_earth/physical/ne_110m_land.shp"
 test -f "${CARTOPY_DATA_DIR:-/usr/share/cartopy}/shapefiles/natural_earth/physical/ne_10m_coastline.shp"
