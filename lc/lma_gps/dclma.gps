@@ -1,0 +1,74 @@
+# Survey file for LMA stations
+#
+# Data format for stations (one line per station):
+#
+#   station letter (single character)
+#   station identifier (number between 0 and 255)
+#   station mnemonic name (string without spaces)
+#   GPS latitude (deg)
+#   GPS longitude (deg)
+#   GPS altitude (m)
+#   VHF plan distance (m)
+#   VHF bearing (degrees to true north)
+#   VHF elevation (degrees, measured to base of vertical dipole element)
+#   cable delay (ns)
+#   LMA board revision #
+#   receiver channel #
+#   start date of the form YYYYMMDD.HHMMSS in UTC
+#   end date of the form YYYYMMDD.HHMMSS in UTC
+#
+#   To calculate cable delay in ns, use 
+#
+#     dt = 1.0e9 * length(m) / ((v/c)*c)
+#
+#   Langmuir Lab's TDR (incorrectly) assumes v/c = 0.67.  c is assumed 
+#   to be 299,792,458 m/s.
+#
+#   This value for v/c underestimates cable lengths: 90 ft for a 104 ft 
+#   RG-6 cable as found in 2009.  But this is irrelevant in calculating
+#   delay times as long as the same value for v/c is used.
+#
+#   Using the above, to convert from TDR cable length L in feet to delay dt in ns:
+#
+#     dt = 1.51746770472 L
+#
+# First non-comment line of this file must be the coordinate origin of the form:
+#
+# "0 <LMA_ID> <LMA_name> lat lon alt"
+#     LMA_name must be a single string without spaces, e.g. LL, TTU, etc
+#     LMA_ID is network ID (number between 1 and 255; 0 is reserved)
+#
+# LMA network ID list:
+#  0 (reserved)
+#  1 LL
+#  2 STEPS
+#  3 AL
+#  4 OK
+#  5 WSMR
+#  6 TTU
+#  7 PNTX
+#  8 DC
+#  ....
+#
+# Lines preceded by a # are treated as comments and disregarded.
+#
+# Survey file version
+#
+version 2
+#
+# Coordinate origin
+#
+0 13 DCLMA  38.88940000  -77.03517000 -2000.00
+#
+# List of stations
+#
+A   1 Sterling         38.97717140  -77.48362060    67.65   0.00   0   0  87 3  3 19980101.000000 20991231.235959
+B   2 NVCC_Woodbridge  38.61862330  -77.29338940    31.68   0.00   0   0   8 3  3 19980101.000000 20991231.235959
+C   3 CSM              38.55880220  -77.00934560    39.36   0.00   0   0  36 3  3 19980101.000000 20991231.235959
+D   4 Howard           38.92179690  -77.02079060    40.22   0.00   0   0 -27 3  3 19980101.000000 20991231.235959
+E   5 UMD              38.97063065  -76.92185974    14.83   0.00   0   0  45 3  3 19980101.000000 20991231.235959
+F   6 AgSite           38.85983770  -76.77735870    30.33   0.00   0   0  12 3  3 19980101.000000 20991231.235959
+G   7 GMU_Manassas     38.75656330  -77.52131390    70.98   0.00   0   0  50 3  3 19980101.000000 20991231.235959
+H   8 Site8            39.15965653  -76.89968109   127.06   0.00   0   0  45 3  3 19980101.000000 20991231.235959
+I   9 Beltsville       39.05648530  -76.87561640    45.27   0.00   0   0  90 3  3 19980101.000000 20991231.235959
+J  10 NVCC_Woodbridge  38.61798096  -77.29319763    40.25   0.00   0   0  90 3  3 19980101.000000 20991231.235959

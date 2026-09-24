@@ -1,0 +1,72 @@
+# Survey file for LMA stations
+#
+# Data format for stations (one line per station):
+#
+#   station letter (single character)
+#   station identifier (number between 0 and 255)
+#   station mnemonic name (string without spaces)
+#   GPS latitude (deg)
+#   GPS longitude (deg)
+#   GPS altitude (m)
+#   VHF plan distance (m)
+#   VHF bearing (degrees to true north)
+#   VHF elevation (degrees, measured to base of vertical dipole element)
+#   cable delay (ns)
+#   LMA board revision #
+#   receiver channel #
+#   start date of the form YYYYMMDD.HHMMSS in UTC
+#   end date of the form YYYYMMDD.HHMMSS in UTC
+#
+#   To calculate cable delay in ns, use 
+#
+#     dt = 1.0e9 * length(m) / ((v/c)*c)
+#
+#   Langmuir Lab's TDR (incorrectly) assumes v/c = 0.67.  c is assumed 
+#   to be 299,792,458 m/s.
+#
+#   This value for v/c underestimates cable lengths: 90 ft for a 104 ft 
+#   RG-6 cable as found in 2009.  But this is irrelevant in calculating
+#   delay times as long as the same value for v/c is used.
+#
+#   Using the above, to convert from TDR cable length L in feet to delay dt in ns:
+#
+#     dt = 1.51746770472 L
+#
+# First non-comment line of this file must be the coordinate origin of the form:
+#
+# "0 <LMA_ID> <LMA_name> lat lon alt"
+#     LMA_name must be a single string without spaces, e.g. LL, TTU, etc
+#     LMA_ID is network ID (number between 1 and 255; 0 is reserved)
+#
+# LMA network ID list:
+#  0 (reserved)
+#  1 LL
+#  2 STEPS
+#  3 AL
+#  4 OK
+#  5 WSMR
+#  6 TTU
+#  7 PNTX
+#  8 DC
+#  ....
+#
+# Lines preceded by a # are treated as comments and disregarded.
+#
+# Survey file version
+#
+version 2
+#
+# Coordinate origin
+#
+0 18 WFF  38.09263230  -75.58956150 -2000.00
+#
+# List of stations
+#
+A   1 Accomack_WESR    37.71807480  -75.68330383   -10.00   0.00   0   0  45 3  3 19980101.000000 20991231.235959
+B   2 THRN_Property    38.03271484  -75.69287109   -21.21   0.00   0   0  45 3  3 19980101.000000 20991231.235959
+C   3 Wallops_Pad      37.93464661  -75.47093964   -13.55   0.00   0   0  45 3  3 19980101.000000 20991231.235959
+D   4 Plywood_Plant    38.07716370  -75.58650970   -23.42   0.00   0   0  45 3  3 19980101.000000 20991231.235959
+E   5 KHLR_Property    38.27021027  -75.72737122   -17.76   0.00   0   0  45 3  3 19980101.000000 20991231.235959
+F   6 SnowHill_AFB     38.19694519  -75.36964416   -20.21   0.00   0   0  45 3  3 19980101.000000 20991231.235959
+G   7 Powellville_VFD  38.33179855  -75.37199402   -18.85   0.00   0   0  45 3  3 19980101.000000 20991231.235959
+H   8 UMD_UAS          38.31513977  -76.55565643    18.51   0.00   0   0  45 3  3 19980101.000000 20991231.235959
