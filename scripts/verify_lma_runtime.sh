@@ -16,7 +16,9 @@ test -f "${LMA_SHAPES_DIR:-/usr/share/lma_shapes}/countyl010g.shp"
 test -f "${LMA_GPS_DIR:-/usr/share/lma_gps}/dclma.gps"
 test -f "${LMA_GPS_DIR:-/usr/share/lma_gps}/wff.gps"
 test -d "${CARTOPY_DATA_DIR:-/usr/share/cartopy}"
-python3 - <<'PY'
+# The science image puts its separate application venv first on PATH. Cartopy
+# belongs to the base image's system Python alongside the lma_plot command.
+/usr/bin/python3 - <<'PY'
 import os
 from pathlib import Path
 from unittest.mock import patch
